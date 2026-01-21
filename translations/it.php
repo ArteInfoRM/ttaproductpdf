@@ -1,0 +1,33 @@
+<?php
+
+global $_MODULE;
+$_MODULE = array();
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_a53979e3d995427bc5239a35bd431c71'] = 'Download Scheda PDF ';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_7ae66313e83e49541a871305af80a400'] = 'Genera un PDF dalla pagina del prodotto utilizzando un TPL personalizzabile.';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_f38f5974cdc23279ffe6d203641a8bdf'] = 'Salvataggio Effettuato';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_dde852502c2d1aa59b6b9c27401cdab7'] = 'Configurazione PDF';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_b8e9a15e0a089c9a08575d788e933014'] = 'Mostra Logo Ecommerce';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_033e675ea9075addf3ce4ee98264a0bc'] = 'Mostra Titolo Prodotto ';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_e1a5e653bc356ed6745d6814d50213eb'] = 'Mostra Prezzo';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_202b3bc57acab6917874ae967a17c085'] = 'Mostra Riferimento';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_8ca68e9419ad968fea9f26bae1f0291a'] = 'Mostra EAN';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_84a875cb61e9ad3b519ece776131b5cf'] = 'Mostra MPN';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_23b0884e9c042ad0d1b8ed268a918454'] = 'Mostra Marchio ';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_81384c2803af6c1e516c723f2925c61d'] = 'Mostra Descrizione Breve';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_57ec5b9ebb823e92aa11c194af2cb22e'] = 'Mostra Descrizione Lunga';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_7e3b521c5f297ef05db5b2402c369188'] = 'Mostra Dettagli Prodotto';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_aa7ca2a3b83559a34e3b33fb4367e7b1'] = 'Mostra QR Code';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_ae68c7d78a4135cf3d9790ef9f176cdf'] = 'Testo Footer';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_de0925a3f6ae36482b8ac063017e8930'] = 'Piè di pagina in testo normale stampato alla fine del PDF.';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_c9cc8cce247e49bae79f15173ce97354'] = 'Salva';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_93cba07454f06a4a960172bbd6e2a435'] = 'Si ';
+$_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_bafd7322c6e97d25b6299b5d6fe8920b'] = 'No';
+$_MODULE['<{ttaproductpdf}prestashop>qr_label_7dfa81a18ec0a16cf03897e10a44c5cb'] = 'Scansiona per aprire il prodotto';
+$_MODULE['<{ttaproductpdf}prestashop>product_fb437d90e0b282eb818e8e9978bb2f77'] = 'Marca:';
+$_MODULE['<{ttaproductpdf}prestashop>product_f2c12ae14393ffc83551d56f32bb03cc'] = 'Prezzo:';
+$_MODULE['<{ttaproductpdf}prestashop>product_3dd42bfc8345e82c43b4a40a3426ec49'] = 'Riferimento:';
+$_MODULE['<{ttaproductpdf}prestashop>product_c1069a480848e06782b81b8bea9c0c94'] = 'Descrizione Breve';
+$_MODULE['<{ttaproductpdf}prestashop>product_b5a7adde1af5c87d7fd797b6245c2a39'] = 'Descrizione';
+$_MODULE['<{ttaproductpdf}prestashop>product_78e454064a7d3a7755a011a3b79f31a7'] = 'Dettagli Prodotto';
+$_MODULE['<{ttaproductpdf}prestashop>product_55707b4848b3a26a39057e3af6948b43'] = 'Per maggiori informazioni:';
+$_MODULE['<{ttaproductpdf}prestashop>button_ff62069a38d84b89db0b2616b7c0762b'] = 'Scarica Scheda PDF';
