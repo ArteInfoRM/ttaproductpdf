@@ -73,7 +73,7 @@ la seguente riga, nel punto desiderato (consigliato prima del copyright):
 
 Il PDF viene generato a partire da:
 
-/views/templates/pdf/product.tpl
+/views/templates/front/pdf/product.tpl
 
 
 Il template è completamente modificabile (HTML semplice + tabelle, compatibile TCPDF).

@@ -27,8 +27,14 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
             die('Missing id_product');
         }
 
+        $module = Module::getInstanceByName('ttaproductpdf');
+        if (!$module instanceof Ttaproductpdf) {
+            header('HTTP/1.1 500 Internal Server Error');
+            die('Module not available');
+        }
+
         $token = (string)Tools::getValue('token');
-        if (!$this->module->isValidToken($idProduct, $token)) {
+        if (!$module->isValidToken($idProduct, $token)) {
             header('HTTP/1.1 403 Forbidden');
             die('Invalid token');
         }
@@ -85,7 +91,7 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
         $priceFormatted = $locale ? $locale->formatPrice($price, $currencyIso) : (string)$price;
 
         // Features
-        $features = $product->getFrontFeatures($idLang);
+        $features = (array)$product->getFrontFeatures($idLang);
 
         // Shop logo
         $shopLogoPath = _PS_IMG_DIR_ . 'logo.jpg';
@@ -98,7 +104,7 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
         $shortPlain = Ttaproductpdf::toPlainText((string)$product->description_short);
         $longPlain  = Ttaproductpdf::toPlainText((string)$product->description);
 
-        $conf = $this->module->getPdfConfig();
+        $conf = $module->getPdfConfig();
 
         // Product URL for QR payload
         $productUrl = $this->context->link->getProductLink($product);
@@ -119,7 +125,7 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
                 'brand' => (string)$manufacturerName,
                 'short_desc' => (string)$shortPlain,
                 'long_desc' => (string)$longPlain,
-                'features' => is_array($features) ? $features : [],
+                'features' => $features,
                 'url' => (string)$productUrl,
             ],
             'config' => $conf,
@@ -127,10 +133,10 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
 
         // Render HTML from TPL
         $this->context->smarty->assign($pdfData);
-        $html = $this->module->fetch('module:ttaproductpdf/views/templates/pdf/product.tpl');
+        $html = $module->fetch('module:ttaproductpdf/views/templates/front/product.tpl');
 
         // QR label translated via TPL (so it appears in module translations)
-        $qrLabelRaw = $this->module->fetch('module:ttaproductpdf/views/templates/pdf/qr_label.tpl');
+        $qrLabelRaw = $module->fetch('module:ttaproductpdf/views/templates/front/qr_label.tpl');
         $qrLabelRaw = trim((string)$qrLabelRaw);
 
         // Remove Smarty debug comments (<!-- begin ... -->)
@@ -144,7 +150,7 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
         }
 
         // PDF
-        $pdf = new PDFGenerator(true, 'UTF-8', false);
+        $pdf = new PDFGenerator();
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
 
@@ -219,4 +225,3 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
         exit;
     }
 }
-

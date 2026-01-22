@@ -55,6 +55,7 @@ class Ttaproductpdf extends Module
             && $this->registerHook('displayProductAdditionalInfo')
             && $this->registerHook('displayProductActions')
             && $this->registerHook(self::HOOK_POS_CUSTOM)
+            && $this->ensureCustomHook()
             && $this->installDefaultConfig();
     }
 
@@ -176,6 +177,17 @@ class Ttaproductpdf extends Module
         foreach ($keysBool as $k) {
             Configuration::updateValue($k, (int)Tools::getValue($k));
         }
+
+        $hookPosition = (string)Tools::getValue(self::CFG_HOOK_POSITION);
+        $allowedHooks = [
+            self::HOOK_POS_ADDITIONAL,
+            self::HOOK_POS_ACTIONS,
+            self::HOOK_POS_CUSTOM,
+        ];
+        if (!in_array($hookPosition, $allowedHooks, true)) {
+            $hookPosition = self::HOOK_POS_ADDITIONAL;
+        }
+        Configuration::updateValue(self::CFG_HOOK_POSITION, $hookPosition);
 
         Configuration::updateValue(self::CFG_FOOTER_TEXT, (string)Tools::getValue(self::CFG_FOOTER_TEXT));
 
