@@ -93,18 +93,18 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
         // Features
         $features = (array)$product->getFrontFeatures($idLang);
 
-        // Shop logo
-        $shopLogoPath = _PS_IMG_DIR_ . 'logo.jpg';
-        $shopLogoUrl = '';
-        if (file_exists($shopLogoPath)) {
-            $shopLogoUrl = $this->context->link->getMediaLink(_PS_IMG_ . 'logo.jpg');
-        }
-
         // Plain text descriptions
         $shortPlain = Ttaproductpdf::toPlainText((string)$product->description_short);
         $longPlain  = Ttaproductpdf::toPlainText((string)$product->description);
 
         $conf = $module->getPdfConfig();
+        $headerLogoPath = '';
+        if (!empty($conf['header_logo'])) {
+            $logoCandidate = _PS_MODULE_DIR_ . 'ttaproductpdf/views/img/' . $conf['header_logo'];
+            if (file_exists($logoCandidate)) {
+                $headerLogoPath = $logoCandidate;
+            }
+        }
 
         // Product URL for QR payload
         $productUrl = $this->context->link->getProductLink($product);
@@ -112,7 +112,7 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
         $pdfData = [
             'shop' => [
                 'name' => (string)Configuration::get('PS_SHOP_NAME'),
-                'logo_url' => $shopLogoUrl,
+                'header_logo_path' => $headerLogoPath,
             ],
             'product' => [
                 'id' => (int)$product->id,

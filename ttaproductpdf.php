@@ -16,7 +16,8 @@ if (!defined('_PS_VERSION_')) {
 class Ttaproductpdf extends Module
 {
     // Config keys
-    private const CFG_SHOW_HEADER_LOGO = 'TTAPDF_SHOW_HEADER_LOGO';
+    private const CFG_HEADER_LOGO = 'TTAPDF_HEADER_LOGO';
+    private const CFG_HEADER_TEXT = 'TTAPDF_HEADER_TEXT';
     private const CFG_SHOW_TITLE = 'TTAPDF_SHOW_TITLE';
     private const CFG_SHOW_PRICE = 'TTAPDF_SHOW_PRICE';
     private const CFG_SHOW_REFERENCE = 'TTAPDF_SHOW_REFERENCE';
@@ -68,7 +69,8 @@ class Ttaproductpdf extends Module
     private function installDefaultConfig(): bool
     {
         $defaults = [
-            self::CFG_SHOW_HEADER_LOGO => 1,
+            self::CFG_HEADER_LOGO => '',
+            self::CFG_HEADER_TEXT => '',
             self::CFG_SHOW_TITLE => 1,
             self::CFG_SHOW_PRICE => 1,
             self::CFG_SHOW_REFERENCE => 1,
@@ -94,7 +96,8 @@ class Ttaproductpdf extends Module
     private function deleteConfig(): bool
     {
         $keys = [
-            self::CFG_SHOW_HEADER_LOGO,
+            self::CFG_HEADER_LOGO,
+            self::CFG_HEADER_TEXT,
             self::CFG_SHOW_TITLE,
             self::CFG_SHOW_PRICE,
             self::CFG_SHOW_REFERENCE,
@@ -160,8 +163,9 @@ class Ttaproductpdf extends Module
 
     private function postProcess(): string
     {
+        $errors = [];
         $keysBool = [
-            self::CFG_SHOW_HEADER_LOGO,
+            // self::CFG_SHOW_HEADER_LOGO, // removed: header logo is a file, not a boolean flag
             self::CFG_SHOW_TITLE,
             self::CFG_SHOW_PRICE,
             self::CFG_SHOW_REFERENCE,
@@ -188,8 +192,13 @@ class Ttaproductpdf extends Module
             $hookPosition = self::HOOK_POS_ADDITIONAL;
         }
         Configuration::updateValue(self::CFG_HOOK_POSITION, $hookPosition);
-
+        Configuration::updateValue(self::CFG_HEADER_TEXT, (string)Tools::getValue(self::CFG_HEADER_TEXT));
+        $this->handleHeaderLogoUpload($errors);
         Configuration::updateValue(self::CFG_FOOTER_TEXT, (string)Tools::getValue(self::CFG_FOOTER_TEXT));
+
+        if (!empty($errors)) {
+            return $this->displayError(implode("\n", $errors));
+        }
 
         return $this->displayConfirmation($this->l('Settings updated.'));
     }
@@ -218,7 +227,18 @@ class Ttaproductpdf extends Module
                         ],
                         'desc' => $this->l('Choose where to display the “Download PDF” button on product page.'),
                     ],
-                    $this->mkSwitch(self::CFG_SHOW_HEADER_LOGO, $this->l('Show shop logo (header)')),
+                    [
+                        'type' => 'file',
+                        'label' => $this->l('Header logo (custom)'),
+                        'name' => self::CFG_HEADER_LOGO,
+                        'desc' => $this->l('Upload a custom logo for the PDF header (JPG, PNG, WEBP).'),
+                    ],
+                    [
+                        'type' => 'text',
+                        'label' => $this->l('Header text'),
+                        'name' => self::CFG_HEADER_TEXT,
+                        'desc' => $this->l('Optional text shown in the PDF header.'),
+                    ],
                     $this->mkSwitch(self::CFG_SHOW_TITLE, $this->l('Show product title')),
                     $this->mkSwitch(self::CFG_SHOW_PRICE, $this->l('Show price')),
                     $this->mkSwitch(self::CFG_SHOW_REFERENCE, $this->l('Show reference')),
@@ -253,6 +273,7 @@ class Ttaproductpdf extends Module
         $helper->submit_action = 'submit_ttapdf';
         $helper->currentIndex = AdminController::$currentIndex . '&configure=' . $this->name;
         $helper->token = Tools::getAdminTokenLite('AdminModules');
+        $helper->multipart = true;
 
         $helper->fields_value = $this->getConfigFormValues();
 
@@ -277,7 +298,7 @@ class Ttaproductpdf extends Module
     {
         return [
             self::CFG_HOOK_POSITION => (string)Configuration::get(self::CFG_HOOK_POSITION),
-            self::CFG_SHOW_HEADER_LOGO => (int)Configuration::get(self::CFG_SHOW_HEADER_LOGO),
+            self::CFG_HEADER_TEXT => (string)Configuration::get(self::CFG_HEADER_TEXT),
             self::CFG_SHOW_TITLE => (int)Configuration::get(self::CFG_SHOW_TITLE),
             self::CFG_SHOW_PRICE => (int)Configuration::get(self::CFG_SHOW_PRICE),
             self::CFG_SHOW_REFERENCE => (int)Configuration::get(self::CFG_SHOW_REFERENCE),
@@ -360,7 +381,8 @@ class Ttaproductpdf extends Module
     public function getPdfConfig(): array
     {
         return [
-            'show_header_logo' => (bool)Configuration::get(self::CFG_SHOW_HEADER_LOGO),
+            'header_logo' => (string)Configuration::get(self::CFG_HEADER_LOGO),
+            'header_text' => (string)Configuration::get(self::CFG_HEADER_TEXT),
             'show_title' => (bool)Configuration::get(self::CFG_SHOW_TITLE),
             'show_price' => (bool)Configuration::get(self::CFG_SHOW_PRICE),
             'show_reference' => (bool)Configuration::get(self::CFG_SHOW_REFERENCE),
@@ -397,4 +419,45 @@ class Ttaproductpdf extends Module
         $txt = preg_replace("/\R{3,}/", "\n\n", $txt);
         return trim($txt);
     }
+
+    private function handleHeaderLogoUpload(array &$errors): void
+    {
+        if (empty($_FILES[self::CFG_HEADER_LOGO]['tmp_name'])) {
+            return;
+        }
+
+        $file = $_FILES[self::CFG_HEADER_LOGO];
+        if (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+            return;
+        }
+
+        $extension = Tools::strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+        if (!in_array($extension, $allowed, true)) {
+            $errors[] = $this->l('Invalid header logo file type. Please upload JPG, PNG, or WEBP.');
+            return;
+        }
+
+        $dir = _PS_IMG_DIR_ . 'ttaproductpdf/';
+        if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) {
+            $errors[] = $this->l('Unable to create logo upload directory.');
+            return;
+        }
+
+        $filename = 'header-logo.' . $extension;
+        $target = $dir . $filename;
+        $uploadError = ImageManager::validateUpload($file, 0, ['jpg', 'jpeg', 'png', 'webp']);
+        if ($uploadError !== false && $uploadError !== '') {
+            $errors[] = $uploadError;
+            return;
+        }
+
+        if (!move_uploaded_file($file['tmp_name'], $target)) {
+            $errors[] = $this->l('Unable to upload header logo.');
+            return;
+        }
+
+        Configuration::updateValue(self::CFG_HEADER_LOGO, $filename);
+    }
+
 }

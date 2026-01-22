@@ -17,6 +17,7 @@
   h1 { font-size: 18px; margin: 0; padding: 0; }
   .pre { white-space: pre-wrap; }
   .logo { max-height: 60px; }
+  .header-text { font-size: 12px; color: #333; }
 
   table.features { width: 100%; border-collapse: collapse; }
   table.features td { padding: 4px; border: 1px solid #ddd; }
@@ -30,8 +31,13 @@
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td valign="top" style="padding-right:45mm;">
-        {if $config.show_header_logo && $shop.logo_url}
-          <img class="logo" src="{$shop.logo_url|escape:'htmlall':'UTF-8'}" alt="{$shop.name|escape:'htmlall':'UTF-8'}" />
+        {if $shop.header_logo_path}
+          <img class="logo" src="{$shop.header_logo_path|escape:'htmlall':'UTF-8'}" alt="{$shop.name|escape:'htmlall':'UTF-8'}" />
+          <br />
+        {/if}
+
+        {if $config.header_text}
+          <div class="header-text">{$config.header_text|escape:'htmlall':'UTF-8'}</div>
           <br />
         {/if}
 
