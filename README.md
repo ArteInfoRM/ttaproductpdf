@@ -1,107 +1,108 @@
 # TTA Product PDF
 ![Built for PrestaShop](https://img.shields.io/badge/Built%20for-PrestaShop-DF0067?logo=prestashop&logoColor=white)
 
-Modulo PrestaShop per la generazione di un **PDF prodotto personalizzabile**, direttamente dalla scheda prodotto.
+PrestaShop module to generate a **customizable product PDF** directly from the product page.
 
-Sviluppato da **Tecnoacquisti** per PrestaShop **8.2 – 9.x**.
+Developed by **Tecnoacquisti** for PrestaShop **8.2 – 9.x**.
 
 ---
 
-## ✨ Funzionalità principali
+## ✨ Main features
 
-- Generazione PDF da **TPL personalizzabile**
-- Contenuti configurabili:
-  - Logo shop
-  - Titolo prodotto
-  - Prezzo
-  - Marca
-  - Riferimento / EAN / MPN
-  - Descrizione breve e lunga (testo pulito, HTML rimosso)
-  - Dettagli prodotto (features)
-  - Testo footer personalizzato
-- **QR Code** (TCPDF `write2DBarcode`) con link al prodotto
-- Testo QR **traducibile** (gestione corretta PrestaShop)
-- Immagine prodotto inclusa
-- Supporto **hook selezionabile** da BO:
+- PDF generation from a **customizable TPL**
+- Configurable content:
+  - Shop logo
+  - Product title
+  - Price
+  - Brand
+  - Reference / EAN / MPN
+  - Short and long description (clean text, HTML removed)
+  - Product details (features)
+  - Custom footer text
+- **QR Code** (TCPDF `write2DBarcode`) linking to the product
+- QR text **translatable** (handled correctly by PrestaShop)
+- Product image included
+- **Selectable hook** support from the Back Office:
   - `displayProductAdditionalInfo`
   - `displayProductActions`
-  - Hook custom `displayTtaProductPdf`
-- Token di sicurezza per accesso PDF
-- Compatibile con **Classic theme** e temi custom
+  - Custom hook `displayTtaProductPdf`
+- Security token for PDF access
+- Compatible with **Classic theme** and custom themes
 
 ---
 
-## 🧩 Compatibilità
+## 🧩 Compatibility
 
-| PrestaShop | Supporto |
+| PrestaShop | Support |
 |-----------|----------|
 | 8.2.x     | ✅ |
 | 8.3.x     | ✅ |
 | 9.x       | ✅ |
-| 1.7.x     | ❌ Non supportato |
+| 1.7.x     | ❌ Not supported |
 
 ---
 
-## 📦 Installazione
+## 📦 Installation
 
-1. Copiare la cartella `ttaproductpdf` in `/modules`
-2. Installare il modulo da **BO → Moduli**
-3. Configurare le opzioni dal pannello del modulo
-
----
-
-## ⚙️ Configurazione
-
-Dal pannello di configurazione è possibile:
-
-- Attivare/disattivare i singoli campi nel PDF
-- Impostare il testo del footer
-- Scegliere la **posizione del pulsante PDF** (hook)
-- Usare una **posizione custom** nel template del prodotto
+1. Copy the `ttaproductpdf` folder into `/modules`
+2. Install the module from BO → Modules
+3. Configure options from the module panel
 
 ---
 
-## 📍 Posizione custom del pulsante
+## ⚙️ Configuration
 
-Selezionando **Custom hook: `displayTtaProductPdf`**, aggiungere nel file:
-themes/YOUR_THEME/templates/catalog/product.tpl
+From the configuration panel you can:
 
-la seguente riga, nel punto desiderato (consigliato prima del copyright):
+- Enable/disable individual fields in the PDF
+- Set the footer text
+- Choose the **position of the PDF button** (hook)
+- Use a **custom position** inside the product template
+
+---
+
+## 📍 Custom button position
+
+By selecting **Custom hook: `displayTtaProductPdf`**, add the following line in your theme file:
+
+`themes/YOUR_THEME/templates/catalog/product.tpl`
+
+Insert it in the desired place (recommended before the copyright):
+
 {hook h='displayTtaProductPdf' product=$product}
 
-## 📄 Template PDF
+## 📄 PDF Template
 
-Il PDF viene generato a partire da:
+The PDF is generated from:
 
-/views/templates/front/product.tpl
+`/views/templates/front/product.tpl`
 
+The template is fully editable (simple HTML + tables, TCPDF-compatible).
 
-Il template è completamente modificabile (HTML semplice + tabelle, compatibile TCPDF).
+## 🔐 Security
 
-## 🔐 Sicurezza
+The PDF is accessible only via a signed token.
 
-Il PDF è accessibile solo tramite token firmato
+No direct access without valid parameters.
 
-Nessun accesso diretto senza parametri validi
+## 🌍 Translations
 
-🌍 Traduzioni
+All strings are translatable from:
+International → Translations → Translations of modules
 
-Tutte le stringhe sono traducibili da:
-Internazionale → Traduzioni → Traduzioni dei moduli
+The QR Code text is managed via a TPL to avoid controller limitations.
 
-Il testo del QR Code è gestito tramite TPL per evitare i limiti dei controller
-
-## 🛠️ Tecnologie utilizzate
+## 🛠️ Technologies used
 
 PrestaShop 8/9
 
-TCPDF (core PrestaShop)
+TCPDF (PrestaShop core)
 
 Smarty
 
 PHP 8.x
 
-## 👨‍💻 Autore
+## 👨‍💻 Author
 
 Tecnoacquisti.com
 
@@ -122,8 +123,3 @@ Under the terms of the AFL v.3.0 license.
 
 Full license text:  
 https://opensource.org/licenses/AFL-3.0
-
-
-
-
-
