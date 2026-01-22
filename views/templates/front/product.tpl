@@ -16,7 +16,7 @@
   .label { font-weight: bold; }
   h1 { font-size: 18px; margin: 0; padding: 0; }
   .pre { white-space: pre-wrap; }
-  .logo { max-height: 60px; }
+  .logo { width: auto; height: 50px; }
   .header-text { font-size: 12px; color: #333; }
 
   table.features { width: 100%; border-collapse: collapse; }

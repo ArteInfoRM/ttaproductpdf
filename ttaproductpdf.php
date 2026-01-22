@@ -438,7 +438,7 @@ class Ttaproductpdf extends Module
             return;
         }
 
-        $dir = _PS_IMG_DIR_ . 'ttaproductpdf/';
+        $dir = _PS_MODULE_DIR_ . 'ttaproductpdf/views/img/';
         if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) {
             $errors[] = $this->l('Unable to create logo upload directory.');
             return;
