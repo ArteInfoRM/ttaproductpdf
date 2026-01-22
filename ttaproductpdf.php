@@ -273,7 +273,6 @@ class Ttaproductpdf extends Module
         $helper->submit_action = 'submit_ttapdf';
         $helper->currentIndex = AdminController::$currentIndex . '&configure=' . $this->name;
         $helper->token = Tools::getAdminTokenLite('AdminModules');
-        $helper->multipart = true;
 
         $helper->fields_value = $this->getConfigFormValues();
 
