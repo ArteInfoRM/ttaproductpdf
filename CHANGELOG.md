@@ -1,10 +1,20 @@
 
+# Changelog
 ---
 
-# 📄 CHANGELOG.md
 
-```markdown
-# Changelog
+## [1.0.1] – 2026-02-10
+
+### ✅ Improvements
+
+#### Added
+- Upload del logo header PDF con salvataggio in `views/img/` del modulo
+- Regola CSS per limitare la larghezza del logo header (max automatica, altezza 50px)
+
+#### Technical
+- Ignorato in Git il file del logo header caricato (`views/img/header-logo.*`)
+
+---
 
 ## [1.0.0] – 2026-01-21
 
