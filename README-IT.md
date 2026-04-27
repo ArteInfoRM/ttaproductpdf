@@ -26,7 +26,8 @@ Sviluppato da **Tecnoacquisti** per PrestaShop **8.2 – 9.x**.
   - `displayProductAdditionalInfo`
   - `displayProductActions`
   - Hook custom `displayTtaProductPdf`
-- Token di sicurezza per accesso PDF
+- **URL SEO-friendly**: `/product-pdf/{id}/{slug-prodotto}`
+- Header `X-Robots-Tag: noindex` sulla risposta PDF
 - Compatibile con **Classic theme** e temi custom
 
 ---
@@ -80,9 +81,9 @@ Il template è completamente modificabile (HTML semplice + tabelle, compatibile 
 
 ## 🔐 Sicurezza
 
-Il PDF è accessibile solo tramite token firmato
+L'accesso è limitato ai prodotti attivi (404 su prodotti inattivi o inesistenti).
 
-Nessun accesso diretto senza parametri validi
+L'URL del PDF usa un formato SEO-friendly (`/product-pdf/{id}/{slug}`) e include l'header `X-Robots-Tag: noindex, nofollow` per impedire l'indicizzazione da parte dei motori di ricerca.
 
 🌍 Traduzioni
 

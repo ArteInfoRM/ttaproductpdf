@@ -38,7 +38,7 @@ class Ttaproductpdf extends Module
     {
         $this->name = 'ttaproductpdf';
         $this->tab = 'administration';
-        $this->version = '1.0.1';
+        $this->version = '1.1.0';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -53,6 +53,7 @@ class Ttaproductpdf extends Module
     public function install()
     {
         return parent::install()
+            && $this->registerHook('moduleRoutes')
             && $this->registerHook('displayProductAdditionalInfo')
             && $this->registerHook('displayProductActions')
             && $this->registerHook(self::HOOK_POS_CUSTOM)
@@ -64,6 +65,24 @@ class Ttaproductpdf extends Module
     {
         return $this->deleteConfig()
             && parent::uninstall();
+    }
+
+    public function hookModuleRoutes(): array
+    {
+        return [
+            'module-ttaproductpdf-pdf' => [
+                'controller' => 'pdf',
+                'rule'       => 'product-pdf/{id_product}/{rewrite}',
+                'keywords'   => [
+                    'id_product' => ['regexp' => '[0-9]+', 'param' => 'id_product'],
+                    'rewrite'    => ['regexp' => '[_a-zA-Z0-9\pL-]*', 'param' => 'rewrite'],
+                ],
+                'params'     => [
+                    'fc'     => 'module',
+                    'module' => $this->name,
+                ],
+            ],
+        ];
     }
 
     private function installDefaultConfig(): bool
@@ -357,12 +376,21 @@ class Ttaproductpdf extends Module
             return '';
         }
 
+        $rewrite = '';
+        if (isset($params['product']['link_rewrite'])) {
+            $rewrite = (string)$params['product']['link_rewrite'];
+        } elseif (isset($params['product']->link_rewrite)) {
+            $rewrite = (string)$params['product']->link_rewrite;
+        } elseif (isset($params['product']['name'])) {
+            $rewrite = Tools::str2url((string)$params['product']['name']);
+        }
+
         $url = $this->context->link->getModuleLink(
             $this->name,
             'pdf',
             [
                 'id_product' => $idProduct,
-                'token' => $this->buildToken($idProduct),
+                'rewrite'    => $rewrite,
             ],
             true
         );
@@ -375,7 +403,7 @@ class Ttaproductpdf extends Module
     }
 
     // -------------------------
-    // Helpers (token, config, text)
+    // Helpers (config, text)
     // -------------------------
     public function getPdfConfig(): array
     {
@@ -394,20 +422,6 @@ class Ttaproductpdf extends Module
             'show_qr' => (bool)Configuration::get(self::CFG_SHOW_QR),
             'footer_text' => (string)Configuration::get(self::CFG_FOOTER_TEXT),
         ];
-    }
-
-    public function buildToken(int $idProduct): string
-    {
-        $customerId = (int)$this->context->customer->id;
-        $secret = (string)_COOKIE_KEY_;
-        // include shop id to avoid cross-shop reuse
-        $shopId = (int)$this->context->shop->id;
-        return hash('sha256', $shopId . '|' . $idProduct . '|' . $customerId . '|' . $secret);
-    }
-
-    public function isValidToken(int $idProduct, string $token): bool
-    {
-        return hash_equals($this->buildToken($idProduct), (string)$token);
     }
 
     public static function toPlainText(string $html): string

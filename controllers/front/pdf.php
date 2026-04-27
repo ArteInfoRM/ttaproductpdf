@@ -33,12 +33,6 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
             die('Module not available');
         }
 
-        $token = (string)Tools::getValue('token');
-        if (!$module->isValidToken($idProduct, $token)) {
-            header('HTTP/1.1 403 Forbidden');
-            die('Invalid token');
-        }
-
         $idLang = (int)$this->context->language->id;
 
         $product = new Product($idProduct, true, $idLang);
@@ -221,6 +215,7 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
         }
         $filename = 'product-' . (int)$product->id . '-' . $safeName . '.pdf';
 
+        header('X-Robots-Tag: noindex, nofollow');
         $pdf->render($filename, true);
         exit;
     }

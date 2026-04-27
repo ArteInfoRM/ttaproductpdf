@@ -2,6 +2,22 @@
 ---
 
 
+## [1.1.0] – 2026-04-27
+
+### ✅ Improvements
+
+#### Added
+- SEO-friendly URL for the PDF: `/product-pdf/{id}/{slug}` via `hookModuleRoutes()`
+- `X-Robots-Tag: noindex, nofollow` header on the PDF response to prevent Google indexing
+
+#### Removed
+- Security token from the PDF URL (token was static for guest users, causing duplicate URLs indexed by Google; PDF contains only public product data already visible on the product page)
+
+#### Technical
+- Added `upgrade/upgrade-1.1.0.php` to register the `moduleRoutes` hook on existing installations without losing configuration
+
+---
+
 ## [1.0.1] – 2026-01-22
 
 ### ✅ Improvements

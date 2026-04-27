@@ -26,7 +26,8 @@ Developed by **Tecnoacquisti** for PrestaShop **8.2 – 9.x**.
   - `displayProductAdditionalInfo`
   - `displayProductActions`
   - Custom hook `displayTtaProductPdf`
-- Security token for PDF access
+- **SEO-friendly URL**: `/product-pdf/{id}/{product-slug}`
+- `X-Robots-Tag: noindex` on the PDF response
 - Compatible with **Classic theme** and custom themes
 
 ---
@@ -81,9 +82,9 @@ The template is fully editable (simple HTML + tables, TCPDF-compatible).
 
 ## 🔐 Security
 
-The PDF is accessible only via a signed token.
+Access is restricted to active products only (404 on inactive or non-existent products).
 
-No direct access without valid parameters.
+The PDF URL uses a SEO-friendly format (`/product-pdf/{id}/{slug}`) and carries an `X-Robots-Tag: noindex, nofollow` response header to prevent search engine indexing.
 
 ## 🌍 Translations
 
