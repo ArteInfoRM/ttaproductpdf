@@ -7,7 +7,7 @@
  *  @author    Arte e Informatica <helpdesk@tecnoacquisti.com>
  *  @copyright 2009-2026 Arte e Informatica
  *  @license   One Paid Licence By WebSite Using This Module. No Rent. No Sell. No Share.
- *  @version   1.0.0
+ *  @version   1.1.1
  */
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -38,7 +38,7 @@ class Ttaproductpdf extends Module
     {
         $this->name = 'ttaproductpdf';
         $this->tab = 'administration';
-        $this->version = '1.1.0';
+        $this->version = '1.1.1';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -47,7 +47,7 @@ class Ttaproductpdf extends Module
 
         $this->displayName = $this->l('Product PDF (simple)');
         $this->description = $this->l('Generate a PDF from product page using a customizable TPL.');
-        $this->ps_versions_compliancy = ['min' => '8.2.0', 'max' => '9.99.99'];
+        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => '9.99.99'];
     }
 
     public function install()
@@ -56,8 +56,8 @@ class Ttaproductpdf extends Module
             && $this->registerHook('moduleRoutes')
             && $this->registerHook('displayProductAdditionalInfo')
             && $this->registerHook('displayProductActions')
-            && $this->registerHook(self::HOOK_POS_CUSTOM)
             && $this->ensureCustomHook()
+            && $this->registerHook(self::HOOK_POS_CUSTOM)
             && $this->installDefaultConfig();
     }
 

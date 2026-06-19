@@ -3,7 +3,7 @@
 
 PrestaShop module to generate a **customizable product PDF** directly from the product page.
 
-Developed by **Tecnoacquisti** for PrestaShop **8.2 – 9.x**.
+Developed by **Tecnoacquisti** for PrestaShop **8.0 – 9.x**.
 
 ---
 
@@ -36,6 +36,8 @@ Developed by **Tecnoacquisti** for PrestaShop **8.2 – 9.x**.
 
 | PrestaShop | Support |
 |-----------|----------|
+| 8.0.x     | ✅ |
+| 8.1.x     | ✅ |
 | 8.2.x     | ✅ |
 | 8.3.x     | ✅ |
 | 9.x       | ✅ |

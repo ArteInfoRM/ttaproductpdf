@@ -3,7 +3,7 @@
 
 Modulo PrestaShop per la generazione di un **PDF prodotto personalizzabile**, direttamente dalla scheda prodotto.
 
-Sviluppato da **Tecnoacquisti** per PrestaShop **8.2 – 9.x**.
+Sviluppato da **Tecnoacquisti** per PrestaShop **8.0 – 9.x**.
 
 ---
 
@@ -36,6 +36,8 @@ Sviluppato da **Tecnoacquisti** per PrestaShop **8.2 – 9.x**.
 
 | PrestaShop | Supporto |
 |-----------|----------|
+| 8.0.x     | ✅ |
+| 8.1.x     | ✅ |
 | 8.2.x     | ✅ |
 | 8.3.x     | ✅ |
 | 9.x       | ✅ |
@@ -123,7 +125,6 @@ Under the terms of the AFL v.3.0 license.
 
 Full license text:  
 https://opensource.org/licenses/AFL-3.0
-
 
 
 

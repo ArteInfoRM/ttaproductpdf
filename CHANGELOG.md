@@ -2,6 +2,15 @@
 ---
 
 
+## [1.1.1] – 2026-06-19
+
+### ✅ Improvements
+
+#### Changed
+- Lowered the minimum supported PrestaShop version to 8.0.
+
+---
+
 ## [1.1.0] – 2026-04-27
 
 ### ✅ Improvements
