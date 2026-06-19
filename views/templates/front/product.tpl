@@ -14,7 +14,7 @@
 <style>
   .wrap { font-size: 11px; }
   .label { font-weight: bold; }
-  h1 { font-size: 18px; margin: 0; padding: 0; }
+  h1 { font-size: 18px; line-height: 1.25; margin: 0; padding: 0; }
   .pre { white-space: pre-wrap; }
   .logo { width: auto; height: 50px; }
   .header-text { font-size: 12px; color: #333; }
@@ -27,10 +27,10 @@
 
 <div class="wrap">
 
-  {* HEADER: 1 riga / 1 cella + spazio a destra per QR *}
+  {* Header: keep the right column empty because the QR code is drawn by TCPDF. *}
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td valign="top" style="padding-right:45mm;">
+      <td width="72%" valign="top">
         {if $shop.header_logo_path}
           <img class="logo" src="{$shop.header_logo_path|escape:'htmlall':'UTF-8'}" alt="{$shop.name|escape:'htmlall':'UTF-8'}" />
           <br />
@@ -71,6 +71,7 @@
           {$product.mpn|escape:'htmlall':'UTF-8'}<br />
         {/if}
       </td>
+      <td width="28%" valign="top">&nbsp;</td>
     </tr>
   </table>
 

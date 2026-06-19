@@ -8,6 +8,7 @@
 
 #### Changed
 - Lowered the minimum supported PrestaShop version to 8.0.
+- Prevented long PDF product titles from overlapping the QR code.
 
 ---
 
