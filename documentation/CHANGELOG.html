@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ttaproductpdf - Changelog</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --text: #1f2933;
+            --muted: #5f6b7a;
+            --border: #d8dee6;
+            --panel: #f6f8fa;
+            --accent: #0b7285;
+        }
+        body {
+            margin: 0;
+            background: #fff;
+            color: var(--text);
+            font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        }
+        main {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 32px 24px 56px;
+        }
+        h1, h2, h3, h4 {
+            line-height: 1.25;
+            margin: 1.8em 0 .6em;
+        }
+        h1 {
+            margin-top: 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 2rem;
+        }
+        h2 {
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.45rem;
+        }
+        h3 {
+            font-size: 1.18rem;
+        }
+        p {
+            margin: .7em 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            margin: 1em 0;
+            padding: .7em 1em;
+            color: var(--muted);
+            border-left: 4px solid var(--border);
+            background: var(--panel);
+        }
+        code {
+            padding: .15em .35em;
+            border-radius: 4px;
+            background: var(--panel);
+            font-family: Consolas, Monaco, "Courier New", monospace;
+            font-size: .92em;
+        }
+        pre {
+            overflow: auto;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+        }
+        pre code {
+            padding: 0;
+            background: transparent;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        th, td {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        th {
+            background: var(--panel);
+            text-align: left;
+        }
+        ul, ol {
+            padding-left: 1.5em;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+        .generated-note {
+            margin-bottom: 24px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+            color: var(--muted);
+            font-size: .92em;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="generated-note">Generated from the Markdown source included with the module.</div>
+<h1>Changelog</h1>
+<hr>
+<h2>[1.1.2] - 2026-11-15</h2>
+<h3>Fixed</h3>
+<ul>
+<li>Validate raw product IDs before controller initialization, generate PDFs without building an unrelated page URL, and enforce current-shop association and customer product access.</li>
+<li>Normalize module PHP formatting and release archive exclusions for validator compatibility.</li>
+</ul>
+<h2>[1.1.1] – 2026-06-19</h2>
+<h3></h3>
+<p> Improvements</p>
+<h4>Changed</h4>
+<ul>
+<li>Lowered the minimum supported PrestaShop version to 8.0.</li>
+<li>Prevented long PDF product titles from overlapping the QR code.</li>
+</ul>
+<hr>
+<h2>[1.1.0] – 2026-04-27</h2>
+<h3></h3>
+<p> Improvements</p>
+<h4>Added</h4>
+<ul>
+<li>SEO-friendly URL for the PDF: <code>/product-pdf/{id}/{slug}</code> via <code>hookModuleRoutes()</code></li>
+<li><code>X-Robots-Tag: noindex, nofollow</code> header on the PDF response to prevent Google indexing</li>
+</ul>
+<h4>Removed</h4>
+<ul>
+<li>Security token from the PDF URL (token was static for guest users, causing duplicate URLs indexed by Google; PDF contains only public product data already visible on the product page)</li>
+</ul>
+<h4>Technical</h4>
+<ul>
+<li>Added <code>upgrade/upgrade-1.1.0.php</code> to register the <code>moduleRoutes</code> hook on existing installations without losing configuration</li>
+</ul>
+<hr>
+<h2>[1.0.1] – 2026-01-22</h2>
+<h3></h3>
+<p> Improvements</p>
+<h4>Added</h4>
+<ul>
+<li>Upload of the PDF header logo saved in the module&#039;s <code>views/img/</code> directory</li>
+<li>CSS rule to limit the header logo width (automatic max, height 50px)</li>
+</ul>
+<h4>Technical</h4>
+<ul>
+<li>Git-ignored the uploaded header logo file (<code>views/img/header-logo.*</code>)</li>
+</ul>
+<hr>
+<h2>[1.0.0] – 2026-01-21</h2>
+<h3>🎉 First stable release</h3>
+<h4>Added</h4>
+<ul>
+<li>Product PDF generation via a dedicated controller</li>
+<li>Fully customizable PDF template (<code>product.tpl</code>)</li>
+<li>Includes:</li>
+<li>Shop logo</li>
+<li>Product title</li>
+<li>Price formatted with locale (PS 8/9)</li>
+<li>Brand, reference, EAN, MPN</li>
+<li>Short and long description (HTML removed)</li>
+<li>Product details (features)</li>
+<li>Configurable footer</li>
+<li>Product image (filesystem path, TCPDF-safe)</li>
+<li>Product QR Code using <code>write2DBarcode()</code></li>
+<li>QR text translatable via a dedicated TPL</li>
+<li>Security token for PDF access</li>
+<li>Compatibility with PrestaShop 8.2 – 9.x</li>
+</ul>
+<h4>Hooks</h4>
+<ul>
+<li>Support for:</li>
+<li><code>displayProductAdditionalInfo</code></li>
+<li><code>displayProductActions</code></li>
+<li>Custom hook <code>displayTtaProductPdf</code></li>
+<li>Hook position selectable from the Back Office</li>
+<li>Automatic creation of the custom hook if not present</li>
+</ul>
+<h4>Admin</h4>
+<ul>
+<li>Full configuration from the module Back Office</li>
+<li>Enable/disable individual PDF fields</li>
+<li>Selection of the PDF button position</li>
+<li>Integrated instructions for the custom hook</li>
+</ul>
+<h4>Technical</h4>
+<ul>
+<li>No external dependencies</li>
+<li>Uses PrestaShop core APIs (Product, Image, Manufacturer, Locale)</li>
+<li>Isolated and secure PDF controller</li>
+<li>PHP 8.x compatible</li>
+</ul>
+<hr>
+<h2>Planned</h2>
+<ul>
+<li>Optional PDF cache</li>
+<li>Advanced multishop support</li>
+<li>Option to attach the PDF to emails</li>
+</ul>
+
+</main>
+</body>
+</html>

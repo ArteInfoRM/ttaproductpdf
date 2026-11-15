@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ttaproductpdf - README</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --text: #1f2933;
+            --muted: #5f6b7a;
+            --border: #d8dee6;
+            --panel: #f6f8fa;
+            --accent: #0b7285;
+        }
+        body {
+            margin: 0;
+            background: #fff;
+            color: var(--text);
+            font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        }
+        main {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 32px 24px 56px;
+        }
+        h1, h2, h3, h4 {
+            line-height: 1.25;
+            margin: 1.8em 0 .6em;
+        }
+        h1 {
+            margin-top: 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 2rem;
+        }
+        h2 {
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.45rem;
+        }
+        h3 {
+            font-size: 1.18rem;
+        }
+        p {
+            margin: .7em 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            margin: 1em 0;
+            padding: .7em 1em;
+            color: var(--muted);
+            border-left: 4px solid var(--border);
+            background: var(--panel);
+        }
+        code {
+            padding: .15em .35em;
+            border-radius: 4px;
+            background: var(--panel);
+            font-family: Consolas, Monaco, "Courier New", monospace;
+            font-size: .92em;
+        }
+        pre {
+            overflow: auto;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+        }
+        pre code {
+            padding: 0;
+            background: transparent;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        th, td {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        th {
+            background: var(--panel);
+            text-align: left;
+        }
+        ul, ol {
+            padding-left: 1.5em;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+        .generated-note {
+            margin-bottom: 24px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+            color: var(--muted);
+            font-size: .92em;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="generated-note">Generated from the Markdown source included with the module.</div>
+<h1>TTA Product PDF</h1>
+<p><img alt="Built for PrestaShop" src="https://img.shields.io/badge/Built%20for-PrestaShop-DF0067?logo=prestashop&amp;logoColor=white"></p>
+<p>PrestaShop module to generate a <strong>customizable product PDF</strong> directly from the product page.</p>
+<p>Developed by <strong>Tecnoacquisti</strong> for PrestaShop <strong>8.0 – 9.x</strong>.</p>
+<hr>
+<h2>✨ Main features</h2>
+<ul>
+<li>PDF generation from a <strong>customizable TPL</strong></li>
+<li>Configurable content:</li>
+<li>Shop logo</li>
+<li>Product title</li>
+<li>Price</li>
+<li>Brand</li>
+<li>Reference / EAN / MPN</li>
+<li>Short and long description (clean text, HTML removed)</li>
+<li>Product details (features)</li>
+<li>Custom footer text</li>
+<li><strong>QR Code</strong> (TCPDF <code>write2DBarcode</code>) linking to the product</li>
+<li>QR text <strong>translatable</strong> (handled correctly by PrestaShop)</li>
+<li>Product image included</li>
+<li><strong>Selectable hook</strong> support from the Back Office:</li>
+<li><code>displayProductAdditionalInfo</code></li>
+<li><code>displayProductActions</code></li>
+<li>Custom hook <code>displayTtaProductPdf</code></li>
+<li><strong>SEO-friendly URL</strong>: <code>/product-pdf/{id}/{product-slug}</code></li>
+<li><code>X-Robots-Tag: noindex</code> on the PDF response</li>
+<li>Compatible with <strong>Classic theme</strong> and custom themes</li>
+</ul>
+<hr>
+<h2>🧩 Compatibility</h2>
+<table><thead><tr><th>PrestaShop</th><th>Support</th></tr></thead><tbody></tbody></table>
+<p></p>
+<hr>
+<h2>📦 Installation</h2>
+<ol>
+<li>Copy the <code>ttaproductpdf</code> folder into <code>/modules</code></li>
+<li>Install the module from BO → Modules</li>
+<li>Configure options from the module panel</li>
+</ol>
+<hr>
+<h2>⚙️ Configuration</h2>
+<p>From the configuration panel you can:</p>
+<ul>
+<li>Enable/disable individual fields in the PDF</li>
+<li>Set the footer text</li>
+<li>Choose the <strong>position of the PDF button</strong> (hook)</li>
+<li>Use a <strong>custom position</strong> inside the product template</li>
+</ul>
+<hr>
+<h2>📍 Custom button position</h2>
+<p>By selecting <strong>Custom hook: <code>displayTtaProductPdf</code></strong>, add the following line in your theme file:</p>
+<p><code>themes/YOUR_THEME/templates/catalog/product.tpl</code></p>
+<p>Insert it in the desired place (recommended before the copyright):</p>
+<p>{hook h=&#039;displayTtaProductPdf&#039; product=$product}</p>
+<h2>📄 PDF Template</h2>
+<p>The PDF is generated from:</p>
+<p><code>/views/templates/front/product.tpl</code></p>
+<p>The template is fully editable (simple HTML + tables, TCPDF-compatible).</p>
+<h2>🔐 Security</h2>
+<p>Access is restricted to active products only (404 on inactive or non-existent products).</p>
+<p>The PDF URL uses a SEO-friendly format (<code>/product-pdf/{id}/{slug}</code>) and carries an <code>X-Robots-Tag: noindex, nofollow</code> response header to prevent search engine indexing.</p>
+<h2>🌍 Translations</h2>
+<p>All strings are translatable from: International → Translations → Translations of modules</p>
+<p>The QR Code text is managed via a TPL to avoid controller limitations.</p>
+<h2>🛠️ Technologies used</h2>
+<p>PrestaShop 8/9</p>
+<p>TCPDF (PrestaShop core)</p>
+<p>Smarty</p>
+<p>PHP 8.x</p>
+<h2>👨‍💻 Author</h2>
+<p>Tecnoacquisti.com</p>
+<p>🌐 https://www.tecnoacquisti.com</p>
+<p>📧 helpdesk@tecnoacquisti.com</p>
+<h2>📜 License</h2>
+<p>This module is released under the <strong>Academic Free License (AFL) v. 3.0</strong>.</p>
+<p>You are free to:</p>
+<ul>
+<li>Use the software for commercial and non-commercial purposes</li>
+<li>Modify the source code</li>
+<li>Distribute modified or unmodified versions</li>
+</ul>
+<p>Under the terms of the AFL v.3.0 license.</p>
+<p>Full license text: https://opensource.org/licenses/AFL-3.0</p>
+
+</main>
+</body>
+</html>

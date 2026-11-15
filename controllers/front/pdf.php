@@ -17,10 +17,39 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
 {
     public $ssl = true;
 
+    /** Validate the product identifier before the front controller lifecycle. */
+    public function init()
+    {
+        foreach ([$_GET, $_POST] as $input) {
+            if (array_key_exists('id_product', $input) && !$this->isValidProductId($input['id_product'])) {
+                $this->rejectProductRequest(400);
+            }
+        }
+        if (!$this->isValidProductId(Tools::getValue('id_product'))) {
+            $this->rejectProductRequest(400);
+        }
+        parent::init();
+    }
+
+    /** @return bool Whether the raw value is a bounded positive decimal ID. */
+    private function isValidProductId($value)
+    {
+        return is_string($value) && preg_match('/^[1-9][0-9]{0,9}$/D', $value)
+            && (float) $value <= 2147483647;
+    }
+
+    /** Return a plain error without reflecting input or product details. */
+    private function rejectProductRequest($status)
+    {
+        http_response_code($status);
+        header('Content-Type: text/plain; charset=utf-8');
+        header('Cache-Control: no-store');
+        exit($status === 400 ? 'Invalid product identifier.' : 'Product not available.');
+    }
+
+    /** Render only the PDF, without constructing an unrelated HTML page URL. */
     public function initContent()
     {
-        parent::initContent();
-
         $idProduct = (int)Tools::getValue('id_product');
         if ($idProduct <= 0) {
             header('HTTP/1.1 400 Bad Request');
@@ -35,10 +64,12 @@ class TtaproductpdfPdfModuleFrontController extends ModuleFrontController
 
         $idLang = (int)$this->context->language->id;
 
-        $product = new Product($idProduct, true, $idLang);
-        if (!Validate::isLoadedObject($product) || !(bool)$product->active) {
-            header('HTTP/1.1 404 Not Found');
-            die('Product not found');
+        $idShop = (int) $this->context->shop->id;
+        $product = new Product($idProduct, true, $idLang, $idShop);
+        if (!Validate::isLoadedObject($product) || !(bool) $product->active
+            || !$product->isAssociatedToShop($idShop)
+            || !$product->checkAccess((int) $this->context->customer->id)) {
+            $this->rejectProductRequest(404);
         }
 
         // Cover image (filesystem path for TCPDF)

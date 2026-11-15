@@ -28,3 +28,12 @@
 /Makefile export-ignore
 /config.xml export-ignore
 /config_it.xml  export-ignore
+
+config*.xml export-ignore
+/dist/ export-ignore
+/sbom.cdx.json export-ignore
+/AGENTS.md export-ignore
+/CLAUDE.md export-ignore
+/.ai/ export-ignore
+/compliance-internal/ export-ignore
+/.keep export-ignore

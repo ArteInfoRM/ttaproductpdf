@@ -7,7 +7,7 @@
  *  @author    Arte e Informatica <helpdesk@tecnoacquisti.com>
  *  @copyright 2009-2026 Arte e Informatica
  *  @license   One Paid Licence By WebSite Using This Module. No Rent. No Sell. No Share.
- *  @version   1.1.1
+ *  @version   1.1.2
  */
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -38,7 +38,7 @@ class Ttaproductpdf extends Module
     {
         $this->name = 'ttaproductpdf';
         $this->tab = 'administration';
-        $this->version = '1.1.1';
+        $this->version = '1.1.2';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -170,9 +170,9 @@ class Ttaproductpdf extends Module
             $output .= $this->postProcess();
         }
 
-        $this->context->smarty->assign(array(
+        $this->context->smarty->assign([
             'shop_base_url' => $shop_base_url,
-        ));
+        ]);
 
         $output .= $this->renderForm();
         $output .= $this->context->smarty->fetch($this->local_path . 'views/templates/admin/help_hook_position.tpl');

@@ -1,7 +1,7 @@
 <?php
 
 global $_MODULE;
-$_MODULE = array();
+$_MODULE = [];
 $_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_a53979e3d995427bc5239a35bd431c71'] = 'Download product PDF';
 $_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_7ae66313e83e49541a871305af80a400'] = 'Generate a PDF from the product page using a customizable TPL.';
 $_MODULE['<{ttaproductpdf}prestashop>ttaproductpdf_f38f5974cdc23279ffe6d203641a8bdf'] = 'Settings saved';

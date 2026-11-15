@@ -2,6 +2,13 @@
 ---
 
 
+## [1.1.2] - 2026-11-15
+
+### Fixed
+
+- Validate raw product IDs before controller initialization, generate PDFs without building an unrelated page URL, and enforce current-shop association and customer product access.
+- Normalize module PHP formatting and release archive exclusions for validator compatibility.
+
 ## [1.1.1] – 2026-06-19
 
 ### ✅ Improvements

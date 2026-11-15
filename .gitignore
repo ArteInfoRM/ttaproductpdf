@@ -27,3 +27,5 @@ Thumbs.db
 /translations/cldr/datas/
 /themes/*/cache/
 /views/img/header-logo.*
+
+/dist/
